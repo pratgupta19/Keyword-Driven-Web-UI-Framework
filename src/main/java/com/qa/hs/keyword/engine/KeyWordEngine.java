@@ -29,8 +29,8 @@ public class KeyWordEngine {
 	
 	public void startExecution(String sheetName) throws FileNotFoundException {
 		
-		String locatorName = null;
-		String locatorValue = null;
+//		String locatorName = null;
+//		String locatorValue = null;
 		FileInputStream file = null;
 		try {
 			file = new FileInputStream(SCENARIO_SHEET_PATH);
@@ -54,14 +54,10 @@ public class KeyWordEngine {
 			try {
 				
 			
-			String locatorColValue = sheet.getRow(i+1).getCell(k+1).toString().trim();
-				if (!locatorColValue.equalsIgnoreCase("NA")) {
-					locatorName = locatorColValue.split("=")[0].trim();
-					locatorValue = locatorColValue.split("=")[1].trim();
-				}
-				
-				String action = sheet.getRow(i+1).getCell(k+2).toString().trim();
-				String value = sheet.getRow(i+1).getCell(k+3).toString().trim();
+				String locatorType = sheet.getRow(i+1).getCell(k+1).toString().trim();
+				String locatorValue = sheet.getRow(i+1).getCell(k+2).toString().trim();			
+				String action = sheet.getRow(i+1).getCell(k+3).toString().trim();
+				String value = sheet.getRow(i+1).getCell(k+4).toString().trim();
 				
 				switch (action) {
 				case "open browser":
@@ -91,7 +87,7 @@ public class KeyWordEngine {
 					break;
 				}
 				
-				switch (locatorName) {
+				switch (locatorType) {
 				case "id":
 					WebElement element = driver.findElement(By.id(locatorValue));
 						if (action.equalsIgnoreCase("sendkeys")) {
@@ -99,7 +95,7 @@ public class KeyWordEngine {
 						} else if (action.equalsIgnoreCase("click")) {
 							element.click();
 						}
-					locatorName = null;
+						locatorType = null;
 					break;
 
 				
